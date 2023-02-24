@@ -4,5 +4,5 @@ https://helloworld-threejs.netlify.app/
 
 *********
 
-Built using React and Threejs 
+Built using React and Threejs  
 Made possible by React Three Fiber ❤️
