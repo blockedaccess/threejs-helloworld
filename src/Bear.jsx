@@ -7,26 +7,26 @@ import { useRef } from "react";
 export default function Bear(){
 
     //all gltf models are downloaded from https://market.pmnd.rs/
-    const bear = useGLTF(`./glTF/bear.gltf`)
+    const bear = useGLTF(`./glTF/bear.gltf`);
     const bigSphereRef = useRef();
 
     useFrame((state,delta)=>
     {
-        bigSphereRef.current.rotation.y += delta/50
+        bigSphereRef.current.rotation.y += delta/50;
 
     })
         
     const cChanger = (event) =>
     {
-        bigSphereRef.current.material.color.set(`hsl(${Math.random() * 360}, 100%, 75%)`)   
+        bigSphereRef.current.material.color.set(`hsl(${Math.random() * 360}, 100%, 75%)`);   
         event.stopPropagation();
     }
 
     return<>
     
         <mesh 
-            ref={bigSphereRef} 
-            rotation-x={ - Math.PI * 0.5 } 
+            ref={bigSphereRef}
+            rotation-x={ - Math.PI * 0.5 }
             scale={ 100 }
         >
             <sphereGeometry />

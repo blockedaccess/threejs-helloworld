@@ -8,7 +8,7 @@ import { useState, useRef } from "react";
 export default function Duck(){
     
     //all gltf models are downloaded from https://market.pmnd.rs/
-    const duck = useGLTF(`./glTF/duck.gltf`)
+    const duck = useGLTF(`./glTF/duck.gltf`);
 
     const [donutMaterial, setDonutMaterial] = useState();
     const [donutGeometry, setDonutGeometry] = useState();
@@ -21,19 +21,18 @@ export default function Duck(){
 
     useFrame((state, delta) => 
     {
+        if (showDonuts) {
+            donutsGroup.current.visible = true;
+          }else{
+              donutsGroup.current.visible = false;
+          }
+          
         for(const donut of donutsGroup.current.children){
-            donut.rotation.y += delta * 1
-            donut.rotation.x += delta * 1
+            donut.rotation.y += delta * 1;
+            donut.rotation.x += delta * 1;
         }
     })
 
-    useFrame(() => {
-        if (showDonuts) {
-          donutsGroup.current.visible = true;
-        }else{
-            donutsGroup.current.visible = false;
-        }
-      });
 
     const createDonuts = (event) => 
     {

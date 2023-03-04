@@ -10,7 +10,7 @@ export default function Text(){
     const [textMaterial, setTextMaterial] = useState();
 
     //matcaps are used from here https://github.com/emmelleppi/matcaps
-    const [textTexture] = useMatcapTexture(`85B9D3_C9EAF9_417277_528789`, 256)
+    const [textTexture] = useMatcapTexture(`E6BF3C_5A4719_977726_FCFC82`, 256);
 
     return <>
         

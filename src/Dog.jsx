@@ -3,18 +3,39 @@ import {
     PivotControls, 
     useGLTF } from "@react-three/drei";
 import { useFrame } from "@react-three/fiber";
-import { useRef } from "react";
+import { useRef,useState } from "react";
+import * as THREE from 'three'
 
 export default function Dog(){
 
     //all gltf models are downloaded from https://market.pmnd.rs/
-    const dog = useGLTF(`./glTF/dog.gltf`)
+    const dog = useGLTF(`./glTF/dog.gltf`);
     const icosahedronRef = useRef();
+
+    const [ smoothedCameraPostion ] = useState(() => new THREE.Vector3(0, 10, 250));
+    const [ smoothedCameraTarget ] = useState(() => new THREE.Vector3(0,0,0));
 
     useFrame((state,delta)=>
     {
-        icosahedronRef.current.rotation.y += delta/2
-        icosahedronRef.current.rotation.x += delta/2
+        icosahedronRef.current.rotation.y += delta/2;
+        icosahedronRef.current.rotation.x += delta/2;
+
+        const cameraPosition = new THREE.Vector3();
+        const cameraTarget = new THREE.Vector3();
+
+        cameraPosition.x = 0;
+        cameraPosition.y = 0.75;
+        cameraPosition.z = 15;
+        cameraTarget.x = cameraPosition.x;
+        cameraTarget.y = 0;
+        cameraTarget.z = -cameraPosition.z;
+
+        smoothedCameraPostion.lerp(cameraPosition, 1 * delta);
+        smoothedCameraTarget.lerp(cameraTarget, 1 * delta);
+
+        state.camera.position.copy(smoothedCameraPostion);
+        state.camera.lookAt(smoothedCameraTarget);
+
     })
 
     const colorChanger = (event) => 
@@ -38,8 +59,8 @@ export default function Dog(){
                 onPointerEnter={() => {document.body.style.cursor = 'pointer'}}
                 onPointerLeave={() => {document.body.style.cursor = 'default'}}
             >
-                <icosahedronGeometry  />
-                <meshStandardMaterial color="#A882DD"/>               
+                <icosahedronGeometry args={[1, 2]} />
+                <meshStandardMaterial flatShading color="#A882DD"/>               
             </mesh>
 
             <Html 
